@@ -4,6 +4,7 @@ import win32api
 
 import numpy as np
 import pandas as pd
+import datetime
 
 import psychopy.visual
 import psychopy.gui
@@ -15,6 +16,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 from ib_stimuli import experimental_setup, movement, stimuli_questions
+from save_data import save_data_to_sheet
 
 
 SCOPES = []
@@ -22,9 +24,8 @@ SCOPES = []
 # clientSecret = "PEjWU1F-yAd5tjdgVs-t6aSn"
 # sheetId = "16C6nZTZhbpzijuF0ighzySsWBnlcuVRpXm-rT7NdeUA"
 
-
-
-response_dict = {}
+response_list = []
+response_list.append(str(datetime.datetime.now()))
 while True:
     gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
     gui.addField("Name: ")
@@ -37,17 +38,12 @@ while True:
         if "" in gui.data:
             win32api.MessageBox(0, "Please fill all the fields.")
             continue
-        response_dict["Name"] = gui.data[0]
-        response_dict["Email"] = gui.data[1]
-        response_dict["Phone"] = gui.data[2]
-        response_dict["Age"] = gui.data[3]
-        response_dict["Gender"] = gui.data[4]
+        for i in range(len(gui.data)):
+            response_list.append(gui.data[i])
     else:
         win32api.MessageBox(0, "Please enter the required data, exiting...")
         sys.exit("Please enter required data")
     break
-
-print(response_dict)
 
 window = psychopy.visual.Window(
     size=[800, 600],
@@ -72,8 +68,6 @@ instructions.draw()
 window.flip()
 
 trials = 16
-# response_df = pd.DataFrame(columns=["Name", "Email", "Phone", "Age", "Sex", "stimuli_slow",
-#                                     "stimuli_above", "notice_additional", "shape_stimuli_res", "stimuli_color_res", "stimuli_above_res"])
 
 blankScreen = psychopy.visual.Rect(
     win=window,
@@ -84,7 +78,7 @@ blankScreen = psychopy.visual.Rect(
     lineColor=[-1] * 3,
 )
 slow = random.choice([True, False])  # Record in response
-response_dict["stimuli_slow"] = slow
+response_list.append(slow)
 
 keys = psychopy.event.waitKeys(keyList=["T", "t", "q", "Q"])
 window.flip()
@@ -93,12 +87,12 @@ if "T" in keys or "t" in keys:
     stimuli_pos = []
     for trial_index in range(trials):
         '''
-            per trial, 
-            600ms frozen start screen, 
-            8000ms of stimuli movement, 
+            per trial,
+            600ms frozen start screen,
+            8000ms of stimuli movement,
             300ms frozen screen to facilitate ambiguous counting decisions
         '''
-        print("Trial {}".format(trial_index))
+        # print("Trial {}".format(trial_index))
         practice_trial = True if trial_index < 3 else False
 
         clock.reset()
@@ -115,13 +109,8 @@ if "T" in keys or "t" in keys:
         pass_count = movement(stimuli_list, window, fixation, line, unexpectedStim, showObject, slow, practice_trial)
         if trial_index == 10 or trial_index == 14 or trial_index == 15:
             response = stimuli_questions()
-            response["pass_count_calc"] = pass_count
-            if trial_index == 10:
-                response_dict["critical_trial"] = response
-            elif trial_index == 14:
-                response_dict["divided_att_trial"] = response
-            elif trial_index == 15:
-                response_dict["full_att_trial"] = response
+            response.append(pass_count)
+            response_list += response
 
         clock.reset()
         window.flip()
@@ -129,6 +118,7 @@ if "T" in keys or "t" in keys:
             blankScreen.draw()
             window.flip()
         window.flip()
-
-print(response_dict)
+# response_list = [str(datetime.datetime(2020, 12, 4, 12, 20, 27, 306320)), 'shivam Chaudhary', 'shivamc021999@gmail.com', '9133013490', '21', 'Male', False, '15', 'Yes', 'Above', 'X', 'Grey', 11, '11', 'Yes', 'Above', 'X', 'Green', 6, '13', 'Yes', 'Above', 'X', 'Grey', 6]
+# print(response_list)
+save_data_to_sheet(response_list)
 window.close()

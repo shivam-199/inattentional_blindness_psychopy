@@ -14,7 +14,7 @@ clock = psychopy.core.Clock()
 
 
 def stimuli_questions():
-    response = {}
+    response = []
     while True:
         gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Submit", labelButtonCancel="Cancel")
         gui.addField("How many times did the red object touch/cross the middle line?")
@@ -28,11 +28,8 @@ def stimuli_questions():
             if "" in gui.data:
                 win32api.MessageBox(0, "Please enter the required data.")
                 continue
-            response["pass_count_resp"] = gui.data[0]
-            response["stimuli_seen"] = gui.data[1]
-            response["stimuli_position"] = gui.data[2]
-            response["stimuli_shape"] = gui.data[3]
-            response["stimuli_color"] = gui.data[4]
+            for i in range(len(gui.data)):
+                response.append(gui.data[i])
         else:
             win32api.MessageBox(0, "Please enter the required data, exiting...")
             sys.exit("Please enter required data")
@@ -44,10 +41,10 @@ def movement(stimuli_list, window, fixation, line, unexpectedStim, showObject=Fa
     clock.reset()
     i = 0
     stimuli_trial_speed = 2.25
-    stimuli_expt_speed = 4.5
+    stimuli_expt_speed = 4
     speed_of_stimuli = stimuli_trial_speed if trial else stimuli_expt_speed
 
-    low_speed_of_object = 2.25
+    low_speed_of_object = 2.5
     high_speed_of_object = 4.5
     object_speed = low_speed_of_object if slow else high_speed_of_object
 
@@ -59,8 +56,9 @@ def movement(stimuli_list, window, fixation, line, unexpectedStim, showObject=Fa
             unexpectedStim.draw()
         for textStim in stimuli_list:
             stim = textStim["stim"]
-            if 1.5 >= stim.pos[1] >= -1.5 and stim.color == "#0000FF":
+            if 2 >= stim.pos[1] >= -2 and stim.color == "#0000FF":
                 pass_count += 1
+                # print("pass {}".format(pass_count))
             if stim.pos[0] >= 390:
                 textStim["x_dir"] *= -1
             elif stim.pos[0] <= -390:
