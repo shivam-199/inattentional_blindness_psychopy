@@ -20,9 +20,6 @@ from save_data import save_data_to_sheet
 
 
 SCOPES = []
-# clientID = "646209918312-dclpaepauatium46t8tg3ap3d1s8i1j3.apps.googleusercontent.com"
-# clientSecret = "PEjWU1F-yAd5tjdgVs-t6aSn"
-# sheetId = "16C6nZTZhbpzijuF0ighzySsWBnlcuVRpXm-rT7NdeUA"
 
 response_list = []
 response_list.append(str(datetime.datetime.now()))
@@ -118,7 +115,6 @@ if "T" in keys or "t" in keys:
             blankScreen.draw()
             window.flip()
         window.flip()
-# response_list = [str(datetime.datetime(2020, 12, 4, 12, 20, 27, 306320)), 'shivam Chaudhary', 'shivamc021999@gmail.com', '9133013490', '21', 'Male', False, '15', 'Yes', 'Above', 'X', 'Grey', 11, '11', 'Yes', 'Above', 'X', 'Green', 6, '13', 'Yes', 'Above', 'X', 'Grey', 6]
-# print(response_list)
+
 save_data_to_sheet(response_list)
 window.close()
