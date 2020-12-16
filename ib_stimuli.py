@@ -18,7 +18,7 @@ def stimuli_questions():
     while True:
         gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Submit", labelButtonCancel="Cancel")
         gui.addField("How many times did the red object touch/cross the middle line?")
-        gui.addField("Did you notice anything other than the 8 letter?", choices=["", "Yes", "No"])
+        gui.addField("Did you notice anything other than the 8 letters (4Ts and 4Ls)?", choices=["", "Yes", "No"])
         gui.addText("Answer the below regardless of your previous answer.")
         gui.addField("Was the additional object above or below the line?", choices=["", "Above", "Below"])
         gui.addField("What was the shape of the object?", choices=["", "X", "O", "T", "L", "W"])

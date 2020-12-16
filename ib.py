@@ -19,8 +19,6 @@ from ib_stimuli import experimental_setup, movement, stimuli_questions
 from save_data import save_data_to_sheet
 
 
-SCOPES = []
-
 response_list = []
 response_list.append(str(datetime.datetime.now()))
 while True:
