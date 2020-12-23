@@ -21,24 +21,24 @@ from save_data import save_data_to_sheet
 
 response_list = []
 response_list.append(str(datetime.datetime.now()))
-while True:
-    gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
-    gui.addField("Name: ")
-    gui.addField("Email: ")
-    gui.addField("Phone: ")
-    gui.addField("Age: ")
-    gui.addField("Gender: ", choices=["", "Male", "Female", "Others"])
-    gui.show()
-    if gui.OK:
-        if "" in gui.data:
-            win32api.MessageBox(0, "Please fill all the fields.")
-            continue
-        for i in range(len(gui.data)):
-            response_list.append(gui.data[i])
-    else:
-        win32api.MessageBox(0, "Please enter the required data, exiting...")
-        sys.exit("Please enter required data")
-    break
+# while True:
+#     gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
+#     gui.addField("Name: ")
+#     gui.addField("Email: ")
+#     gui.addField("Phone: ")
+#     gui.addField("Age: ")
+#     gui.addField("Gender: ", choices=["", "Male", "Female", "Others"])
+#     gui.show()
+#     if gui.OK:
+#         if "" in gui.data:
+#             win32api.MessageBox(0, "Please fill all the fields.")
+#             continue
+#         for i in range(len(gui.data)):
+#             response_list.append(gui.data[i])
+#     else:
+#         win32api.MessageBox(0, "Please enter the required data, exiting...")
+#         sys.exit("Please enter required data")
+#     break
 
 window = psychopy.visual.Window(
     size=[800, 600],
@@ -54,8 +54,12 @@ instructions = psychopy.visual.TextStim(
 )
 
 instructions.text = """
-Focus on the central square by default. \n
-When the experiment starts count the number of times the red stimulus passes or touches the central line.\n
+When the experiment starts, focus on the black square at the center of the screen. \n
+There are a total of 16 trials, each trial separated by brief blank screens. You have to count the number of times the
+red letters cross the central horizontal line in each trial. When asked to enter the count, enter the count of only
+the previous trial. \n
+Please note that the personal information collected will not be shared with any third party. \n
+Participation in this study is voluntary, you can leave the experiment at any time in between. \n
 Press 'T' to continue or 'Q' to exit.
 """
 
@@ -101,6 +105,10 @@ if "T" in keys or "t" in keys:
             stimuli_pos.append(stimPos)
         else:
             showObject = False
+        if trial_index == 14:
+            unexpectedStim.color = "#000000"
+        else:
+            unexpectedStim.color = "#E4E4E4"
         pass_count = movement(stimuli_list, window, fixation, line, unexpectedStim, showObject, slow, practice_trial)
         if trial_index == 10 or trial_index == 14 or trial_index == 15:
             response = stimuli_questions()
@@ -115,4 +123,14 @@ if "T" in keys or "t" in keys:
         window.flip()
 
 save_data_to_sheet(response_list)
+
+thankYouScreen = psychopy.visual.TextStim(
+    win=window,
+    wrapWidth=600,
+)
+thankYouScreen.text = "Thank you for participating in this study!"
+thankYouScreen.draw()
+window.flip()
+psychopy.event.waitKeys()
+
 window.close()

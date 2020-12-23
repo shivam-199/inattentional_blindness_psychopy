@@ -16,7 +16,7 @@ clock = psychopy.core.Clock()
 def stimuli_questions():
     response = []
     while True:
-        gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Submit", labelButtonCancel="Cancel")
+        gui = psychopy.gui.Dlg(title="Questionnaire", labelButtonOK="Submit", labelButtonCancel="Cancel")
         gui.addField("How many times did the red object touch/cross the middle line?")
         gui.addField("Did you notice anything other than the 8 letters (4Ts and 4Ls)?", choices=["", "Yes", "No"])
         gui.addText("Answer the below regardless of your previous answer.")
@@ -116,7 +116,9 @@ def experimental_setup(window):
         win=window,
         text="X",
         color="#E4E4E4",
-        pos=[390, 15 * stimPos]
+        pos=[390, 15 * stimPos],
+        units="pix",
+        height=20
     )
 
     # generating text stimuli
@@ -124,16 +126,15 @@ def experimental_setup(window):
         text = "T" if i % 2 == 0 else "L"
         color = "#0000FF" if i < stimuli_count/2 else "#FF0000"
         textDict = {
-            # "slope": random.uniform(0, sys.maxsize),
-            # "intercept": random.uniform(-290, 290),
             "x_dir": random.choice([-1, 1]),
             "y_dir": random.choice([-1, 1]),
             "stim": psychopy.visual.TextStim(
                 win=window,
                 text=text,
+                units="pix",
                 color=color,
                 pos=[random.uniform(-380, 380), random.uniform(-280, 280)],
-
+                height=20
             )
         }
         stimuli_list.append(textDict)
