@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db9b8c75-1709-49a5-bfb3-beb401de277f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ib.py" beforeDir="false" afterPath="$PROJECT_DIR$/ib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ib_stimuli.py" beforeDir="false" afterPath="$PROJECT_DIR$/ib_stimuli.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/save_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/save_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/token.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/token.pickle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

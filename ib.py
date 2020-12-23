@@ -21,24 +21,24 @@ from save_data import save_data_to_sheet
 
 response_list = []
 response_list.append(str(datetime.datetime.now()))
-# while True:
-#     gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
-#     gui.addField("Name: ")
-#     gui.addField("Email: ")
-#     gui.addField("Phone: ")
-#     gui.addField("Age: ")
-#     gui.addField("Gender: ", choices=["", "Male", "Female", "Others"])
-#     gui.show()
-#     if gui.OK:
-#         if "" in gui.data:
-#             win32api.MessageBox(0, "Please fill all the fields.")
-#             continue
-#         for i in range(len(gui.data)):
-#             response_list.append(gui.data[i])
-#     else:
-#         win32api.MessageBox(0, "Please enter the required data, exiting...")
-#         sys.exit("Please enter required data")
-#     break
+while True:
+    gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
+    gui.addField("Name: ")
+    gui.addField("Email: ")
+    gui.addField("Phone: ")
+    gui.addField("Age: ")
+    gui.addField("Gender: ", choices=["", "Male", "Female", "Others"])
+    gui.show()
+    if gui.OK:
+        if "" in gui.data:
+            win32api.MessageBox(0, "Please fill all the fields.")
+            continue
+        for i in range(len(gui.data)):
+            response_list.append(gui.data[i])
+    else:
+        win32api.MessageBox(0, "Please enter the required data, exiting...")
+        sys.exit("Please enter required data")
+    break
 
 window = psychopy.visual.Window(
     size=[800, 600],
