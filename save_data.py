@@ -30,16 +30,26 @@ def save_data_to_sheet(data):
             pickle.dump(creds, token)
 
     service = build('sheets', 'v4', credentials=creds)
-    values = ["Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello"]
+    # values = ["Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello", "Hello"]
     body = {
         "values": [data]
     }
     # SPREADSHEET_ID = SPREADSHEET_ID_MAIN
     SPREADSHEET_ID = SPREADSHEET_ID_TEST
-    result = service.spreadsheets().values().append(
+    try:
+        result = service.spreadsheets().values().append(
         spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME,
         valueInputOption="RAW", body=body).execute()
-    print('{0} cells appended.'.format(result \
-                                       .get('updates') \
-                                       .get('updatedCells')))
+        print('{0} cells appended.'.format(result \
+                                           .get('updates') \
+                                           .get('updatedCells')))
+    except:
+        data_df = pd.DataFrame([data])
+        with open("temp_database.csv", "a") as file:
+            data_df.to_csv(file, header=file.tell() == 0, index=False)
+        print("to local server")
 
+
+
+
+# save_data_to_sheet("")

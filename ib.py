@@ -21,24 +21,24 @@ from save_data import save_data_to_sheet
 
 response_list = []
 response_list.append(str(datetime.datetime.now()))
-while True:
-    gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
-    gui.addField("Name: ")
-    gui.addField("Email: ")
-    gui.addField("Phone: ")
-    gui.addField("Age: ")
-    gui.addField("Gender: ", choices=["", "Male", "Female", "Others"])
-    gui.show()
-    if gui.OK:
-        if "" in gui.data:
-            win32api.MessageBox(0, "Please fill all the fields.")
-            continue
-        for i in range(len(gui.data)):
-            response_list.append(gui.data[i])
-    else:
-        win32api.MessageBox(0, "Please enter the required data, exiting...")
-        sys.exit("Please enter required data")
-    break
+# while True:
+#     gui = psychopy.gui.Dlg(title="Personal Information", labelButtonOK="Confirm", labelButtonCancel="Exit")
+#     gui.addField("Name: ")
+#     gui.addField("Email: ")
+#     gui.addField("Phone: ")
+#     gui.addField("Age: ")
+#     gui.addField("Gender: ", choices=["", "Male", "Female", "Others"])
+#     gui.show()
+#     if gui.OK:
+#         if "" in gui.data:
+#             win32api.MessageBox(0, "Please fill all the fields.")
+#             continue
+#         for i in range(len(gui.data)):
+#             response_list.append(gui.data[i])
+#     else:
+#         win32api.MessageBox(0, "Please enter the required data, exiting...")
+#         sys.exit("Please enter required data")
+#     break
 
 window = psychopy.visual.Window(
     size=[800, 600],
@@ -84,7 +84,7 @@ window.flip()
 
 if "T" in keys or "t" in keys:
     stimuli_pos = []
-    for trial_index in range(trials):
+    for trial_index in range(10, trials):
         '''
             per trial,
             600ms frozen start screen,
@@ -124,10 +124,13 @@ if "T" in keys or "t" in keys:
 
 save_data_to_sheet(response_list)
 
+window.flip()
+
 thankYouScreen = psychopy.visual.TextStim(
     win=window,
     wrapWidth=600,
 )
+
 thankYouScreen.text = "Thank you for participating in this study!"
 thankYouScreen.draw()
 window.flip()
